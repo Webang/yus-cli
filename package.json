@@ -1,0 +1,25 @@
+{
+  "name": "yus-cli",
+  "description": "基于 vue-cli 2.X 的h5模板",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "yus-cli": "yus-init.js"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^7.0.0",
+    "ora": "^4.0.3",
+    "rimraf": "^3.0.0",
+    "tildify": "^2.0.0",
+    "user-home": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
