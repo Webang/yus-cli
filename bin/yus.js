@@ -5,6 +5,6 @@ const program = require('commander')
 program
   .version(require('../package').version)
   .usage('<command> [options]')
-  .command('init', 'generate a new project from a template')
+  .command('init', 'generate a new h5-vue project from a template')
 
 program.parse(process.argv)

@@ -1,6 +1,6 @@
 {
   "name": "yus-cli",
-  "description": "基于 vue-cli 2.X 的h5模板",
+  "description": "项目初始化工具",
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
