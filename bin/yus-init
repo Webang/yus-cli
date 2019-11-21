@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const download = require('download-git-repo')
 const program = require('commander')
 const exists = require('fs').existsSync
@@ -19,6 +21,11 @@ const rawName = program.args[1]
 const inPlace = !rawName || rawName === '.' // 没写或者“.”，表示当前目录下构建项目
 const name = inPlace ? path.relative('../', process.cwd()) : rawName // 如果在当前目录下构建项目,当前目录名为项目构建目录名，否则是当前目录下的子目录【rawName】为项目构建目录名
 const to = path.resolve(rawName || '.')   // 项目构建目录的绝对路径
+
+if (!template || !rawName) {
+  console.log(chalk.yellow('输入正确的格式如: yus init [template] [project] '));
+  process.exit(0);
+}
 
 const templates = {
   ['h5-vue2-tpl']: 'github:Webang/h5-vue2-tpl',

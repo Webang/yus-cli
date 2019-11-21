@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
-    "yus-cli": "yus-init.js"
+    "yus": "bin/yus",
+    "yus-init": "bin/yus-init"
   },
   "dependencies": {
     "chalk": "^3.0.0",
