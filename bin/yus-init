@@ -13,38 +13,81 @@ const rm = require('rimraf').sync
 
 program.parse(process.argv)
 
+const metaInfo = {
+  remote: '',
+  destDir: ''
+}
+
 // 模板名称
-let template = program.args[0]
+// let template = program.args[0]
 
 // 项目构建目录名
-const rawName = program.args[1]
-const inPlace = !rawName || rawName === '.' // 没写或者“.”，表示当前目录下构建项目
-const name = inPlace ? path.relative('../', process.cwd()) : rawName // 如果在当前目录下构建项目,当前目录名为项目构建目录名，否则是当前目录下的子目录【rawName】为项目构建目录名
-const to = path.resolve(rawName || '.')   // 项目构建目录的绝对路径
+// const rawName = program.args[1]
+// const inPlace = !rawName || rawName === '.' // 没写或者“.”，表示当前目录下构建项目
+// const name = inPlace ? path.relative('../', process.cwd()) : rawName // 如果在当前目录下构建项目,当前目录名为项目构建目录名，否则是当前目录下的子目录【rawName】为项目构建目录名
+// const to = path.resolve(rawName || '.')   // 项目构建目录的绝对路径
 
-if (!template || !rawName) {
-  console.log(chalk.yellow('输入正确的格式如: yus init [template] [project] '));
-  process.exit(0);
-}
+// if (!template || !rawName) {
+//   console.log(chalk.yellow('输入正确的格式如: yus init [template] [project] '));
+//   process.exit(0);
+// }
 
 const templates = {
   ['h5-vue2-tpl']: 'github:Webang/h5-vue2-tpl',
   ['h5-vue3-tpl']: 'github:Webang/h5-vue3-tpl',
+  ['h5-react-tpl']: 'github:Webang/h5-react-tpl',
   ['vue-admin-tpl']: 'github:Webang/vue-admin-tpl',
-  ['h5-react-tpl']: 'github:Webang/h5-react-tpl'
 }
+
+const labels = {
+  ['h5-vue2-tpl']: 'Vue2H5模板',
+  ['h5-vue3-tpl']: 'Vue3H5模板',
+  ['h5-react-tpl']: 'reactH5模板',
+  ['vue-admin-tpl']: 'Vue2后台管理系统'
+}
+
+/**
+ * @description 通过label查找模板名称
+ * @param lable 
+ */
+function findTplByLabel(lable) {
+  let ret;
+  Object.keys(labels).forEach(key => {
+    if (labels[key] === lable) {
+      ret = key;
+    }
+  })
+  return ret;
+}
+
+const promptList = [{
+  type: 'list',
+  message: '请选择初始化模板',
+  name: 'tpl',
+  choices: Object.values(labels)
+}, {
+  type: 'input',
+  message: '请输入项目目录名称',
+  name: 'appName'
+}];
+
+inquirer.prompt(promptList).then(answers => {
+  let tpl = findTplByLabel(answers.tpl)
+  metaInfo.remote = templates[tpl];
+  metaInfo.destDir = path.resolve(process.cwd(), `../${answers.appName}`);
+  console.log(metaInfo)
+  run();
+})
 
 function run() {
   const spinner = ora('downloading template')
   spinner.start()
-  download(templates[template], to, err => {
+  download(metaInfo.remote, metaInfo.destDir, err => {
     if (err) {
-      console.log(chalk.err('Failed to download repo ' + template + ': ' + err.message.trim()))
+      console.log(chalk.err('Failed to download repo ' + metaInfo.tplRemote + ': ' + err.message.trim()))
       return
     }
     spinner.stop()
     console.log(chalk.green('下载模板成功～'))
   })
 }
-
-run();
