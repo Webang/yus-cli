@@ -30,6 +30,7 @@ if (!template || !rawName) {
 const templates = {
   ['h5-vue2-tpl']: 'github:Webang/h5-vue2-tpl',
   ['h5-vue3-tpl']: 'github:Webang/h5-vue3-tpl',
+  ['vue-admin-tpl']: 'github:Webang/vue-admin-tpl',
   ['h5-react-tpl']: 'github:Webang/h5-react-tpl'
 }
 
